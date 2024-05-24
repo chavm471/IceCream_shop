@@ -10,6 +10,11 @@ to set a size (which is different for each type)
 #include<string>
 #include<memory>
 #include<vector>
+#include<random>
+
+const double CAKE_BASE_PRICE = 25;
+const double SHAKE_BASE_PRICE = 7.99;
+const double WAFFLECONE_BASE_PRICE = 5.99;
 
 using namespace std;
 enum class Toppings
@@ -27,11 +32,10 @@ enum class Flavors
     STRAWBERRY,
     VANILLA,
     CHOCOLATE,
-    MINT,
-    PISTACHIO,
-    COFFEE,
-    ROCKYROAD
+    MINT
 };
+
+///Can make an option to change size
 
 //this is the base class
 class Dessert
@@ -39,17 +43,24 @@ class Dessert
     public:
     //default contructor
     Dessert();
+    //copy constructor
+    Dessert(const Dessert & to_copy);
     //destructor has to be virtual to call the correct derived class destructor
     virtual ~Dessert();
     virtual int displayProduct() const;
     virtual string chooseSize() = 0;
     virtual double addOns() = 0;
+    int randNum(int limit);
+    double chooseFlavor();
     double updateSales();
+    friend bool operator == (const Dessert & src,const Dessert &);
+    friend bool operator == (const Dessert & src,const int & pNum);
+    friend bool operator == (const int & pNum,const Dessert & src);
     
     private:
         int productNum;
         double totalSales;
-        vector<Flavors> iceCream;
+        vector<string> iceCream;
 };
 
 class IceCreamCake : public Dessert
@@ -57,8 +68,7 @@ class IceCreamCake : public Dessert
     public:
         IceCreamCake();
         ~IceCreamCake();
-/*        IceCreamCake(const int prodNum,const double srcSales,vector<string> srcTopping,const string & srcSize, const int srcLayers);
-        IceCreamCake::IceCreamCake(const Dessert & src,const string & srcSize, const int srcLayers);*/
+        IceCreamCake(const Dessert & src,const string & srcSize, const int srcLayers);
         //virtual functions
         int displayProduct() const;
         string chooseSize(); // large only
@@ -75,6 +85,7 @@ class MilkShake : public Dessert
 {
     public:
         MilkShake();
+        MilkShake(const Dessert & src,const int srcVolume,const string & srcContainer);
         ~MilkShake();
         //virtual functions
         int displayProduct() const ;
@@ -92,7 +103,7 @@ class WaffleCone : public Dessert
 {
     public:
         WaffleCone();
-        WaffleCone(const string & src_coneSize, vector<string> & srcToppings);
+        WaffleCone(const Dessert & src,const string & src_coneSize, vector<string> & srcToppings);
         ~WaffleCone();
         //virtual function
         int displayProduct() const;
