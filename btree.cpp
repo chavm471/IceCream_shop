@@ -6,38 +6,55 @@ data structure that is a Btree.
 #include"btree.h"
 using namespace std;
 
-Node::Node() : data(nullptr),left(nullptr),right(nullptr)
-{}
-
-//copy constructor
-Node::Node(const Node & src) : left(nullptr),right(nullptr)
+//default constructor
+Node::Node(int num) : left(nullptr),mleft(nullptr),mright(nullptr),right(nullptr)
 {
-    //check if there data
-    /*if(src.data)
+    size = num;
+    data = new Dessert * [size];
+    //initialize each index to null
+    for(int i =0;i < size;++i)
     {
-        data = new Dessert(*src.data);
+        data[i] = nullptr;
     }
-    else
-    {
-        data = nullptr;
-    }*/
 }
 
 //destructor 
 Node::~Node()
 {}
 
-Node *& Node::get_left()
+//This function return pointer to most left
+Node::node_ptr_type & Node::get_left()
 {
     return left;
 }
-
-Node *& Node::get_right()
+//this function returns middle left node
+Node::node_ptr_type & Node::get_mleft()
+{
+    return mleft;
+}
+//this function gets the middle right node
+Node::node_ptr_type & Node::get_mright()
+{
+    return mright;
+}
+//this function returns most right now
+Node::node_ptr_type & Node::get_right()
 {
     return right;
 }
 
-
+//this function allows us to transfer ownership of unique ptr
+int Node::set_data(int index)
+{
+    //check if index is greater than 0 and index is less than max size
+    if(index >= 0 && index < size)
+    {
+        //transfer ownership over to the index
+        //data[index] = move(to_add);
+        return 1;
+    }
+    return 0;
+}
 
 //constructor
 Btree::Btree(): root(nullptr)
@@ -48,21 +65,23 @@ Btree::~Btree()
 {}
 
 //wrapper function for insert
-int Btree::insert(unique_ptr<Dessert> to_add)
+int Btree::insert(const Dessert * to_add)
 {
-    //return insert(root,to_add);
-    return 0;
+    return insert(root,move(to_add));
 }
 
 
-int Btree::insert(Node *& root,unique_ptr<Dessert> to_add)
+int Btree::insert(Node *& root,const Dessert * to_add)
 {
     if(!root)
     {
-        //create new node
-        //add to the tree
-        
+        //make new Node with array of unique ptrs size 4
+        //root = new Node(4);
+        //transfer ownership of the unique_ptr to the index
+        //root->set_data(to_add,0);
+        return 1;
     }
+
     return 0;
 }
 

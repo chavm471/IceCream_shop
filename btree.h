@@ -11,38 +11,42 @@ using std::unique_ptr;
 class Node
 {
     public:
-        //typedef unique_ptr<Node> node_ptr_type;
-        Node();
-        Node(const Node & src);
+        typedef unique_ptr<Node> node_ptr_type;
+        Node(int num = 4);
         ~Node();
-        Node *& get_left();
-        Node *& get_right();
-        int set_data();
+        node_ptr_type & get_left();
+        node_ptr_type & get_mleft();
+        node_ptr_type & get_mright();
+        node_ptr_type & get_right();
+        int set_data(int index);
         
     private:
-        unique_ptr<Dessert> data;
-        Node * left;
-        Node * right;
+        int size;
+        //shared_ptr<shared_ptr<Dessert>[]> data;
+        //vector<shared_ptr<Dessert>> data;
+        Dessert ** data;
+        node_ptr_type left;
+        node_ptr_type mleft;
+        node_ptr_type mright;
+        node_ptr_type right;
 };
 
 //implementing a regular tree first then a balance tree
 class Btree
 {
     public:
-        //typedef Node node_type;
-        //typedef unique_ptr<Node> node_ptr;
         //constructor
         Btree();
         //destructor
         ~Btree();
         //wrapper function for insert
-        int insert(unique_ptr<Dessert> to_add);
+        int insert(const Dessert * to_add);
         //wrapper function for display
         int display() const;
 
     private:
         Node * root;
-        //
-        int insert(Node *& root,unique_ptr<Dessert> to_add);
+        //this is the recursive calls
+        int insert(Node *& root,const Dessert * to_add);
         int display(const Node *& root) const;
 };

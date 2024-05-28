@@ -15,6 +15,13 @@ to set a size (which is different for each type)
 const double CAKE_BASE_PRICE = 25;
 const double SHAKE_BASE_PRICE = 7.99;
 const double WAFFLECONE_BASE_PRICE = 5.99;
+const double ADDTOP = 2.99;
+const double ADDFLAV = 2.99;
+const double EXPEDITE = 10.99;
+const double MEDCAKE = 19.99;
+const double LARGCAKE = 25.99;
+const double EXTRLAYERS = 5.99;
+
 
 using namespace std;
 enum class Toppings
@@ -41,8 +48,6 @@ enum class Flavors
 class Dessert
 {
     public:
-    //default contructor
-    Dessert();
     //copy constructor
     Dessert(const Dessert & to_copy);
     //destructor has to be virtual to call the correct derived class destructor
@@ -52,10 +57,13 @@ class Dessert
     virtual double addOns() = 0;
     int randNum(int limit);
     double chooseFlavor();
-    double updateSales();
+    double updateSales(double & addSale);
     friend bool operator == (const Dessert & src,const Dessert &);
     friend bool operator == (const Dessert & src,const int & pNum);
     friend bool operator == (const int & pNum,const Dessert & src);
+
+    protected:
+        Dessert();
     
     private:
         int productNum;
@@ -68,6 +76,7 @@ class IceCreamCake : public Dessert
     public:
         IceCreamCake();
         ~IceCreamCake();
+        //initialization list
         IceCreamCake(const Dessert & src,const string & srcSize, const int srcLayers);
         //virtual functions
         int displayProduct() const;
@@ -85,6 +94,7 @@ class MilkShake : public Dessert
 {
     public:
         MilkShake();
+        //initialization list
         MilkShake(const Dessert & src,const int srcVolume,const string & srcContainer);
         ~MilkShake();
         //virtual functions
@@ -93,6 +103,7 @@ class MilkShake : public Dessert
         string chooseSize(); // changes to int to store in volume in data member
         //end of virtual functions
         string chooseContainer();// glass, foam
+        friend ostream & operator <<(ostream & out, const MilkShake &);
 
     private:
         int volume;
@@ -116,4 +127,3 @@ class WaffleCone : public Dessert
         string coneSize;
         vector<string> toppings;
 };
-
