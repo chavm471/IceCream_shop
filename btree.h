@@ -11,19 +11,20 @@ using std::unique_ptr;
 class Node
 {
     public:
-        typedef unique_ptr<Node> node_ptr_type;
+        typedef shared_ptr<Node> node_ptr_type;
         Node(int num = 4);
         ~Node();
         node_ptr_type & get_left();
         node_ptr_type & get_mleft();
         node_ptr_type & get_mright();
         node_ptr_type & get_right();
+        bool less_than_or_equal(const Dessert * new_data);
+        bool greater_than(const Dessert * new_data);
         int set_data(int index);
+        int displayData();
         
     private:
         int size;
-        //shared_ptr<shared_ptr<Dessert>[]> data;
-        //vector<shared_ptr<Dessert>> data;
         Dessert ** data;
         node_ptr_type left;
         node_ptr_type mleft;
@@ -35,6 +36,7 @@ class Node
 class Btree
 {
     public:
+        typedef shared_ptr<Node> node_ptr;
         //constructor
         Btree();
         //destructor
@@ -42,11 +44,16 @@ class Btree
         //wrapper function for insert
         int insert(const Dessert * to_add);
         //wrapper function for display
-        int display() const;
+        int displayAll() const;
+        //wrapper fucntion for remove all function
+        int removeAll();
 
     private:
-        Node * root;
+        node_ptr root;
         //this is the recursive calls
-        int insert(Node *& root,const Dessert * to_add);
-        int display(const Node *& root) const;
+        int insert(node_ptr & root,const Dessert * to_add);
+        //recursive call for the display all function
+        int displayAll(const node_ptr & root) const;
+        //recursive call for remove all
+        int deleteAll(node_ptr & current);
 };

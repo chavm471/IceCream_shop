@@ -15,32 +15,21 @@ to set a size (which is different for each type)
 const double CAKE_BASE_PRICE = 25;
 const double SHAKE_BASE_PRICE = 7.99;
 const double WAFFLECONE_BASE_PRICE = 5.99;
-const double ADDTOP = 2.99;
+const double ADDTOP = 0.99;
 const double ADDFLAV = 2.99;
 const double EXPEDITE = 10.99;
 const double MEDCAKE = 19.99;
 const double LARGCAKE = 25.99;
+const double SMALLSHAKE = 4.99;
+const double MEDSHAKE = 4.99;
+const double LARGESHAKE = 4.99;
 const double EXTRLAYERS = 5.99;
+const double SMALLCONE = 3.99;
+const double MEDCONE = 4.99;
+const double LARGCONE = 6.99;
 
 
 using namespace std;
-enum class Toppings
-{
-    CHERRY,
-    NUTS,
-    COCONUT,
-    FUDGE,
-    CARAMEL,
-    OREO
-};
-
-enum class Flavors
-{
-    STRAWBERRY,
-    VANILLA,
-    CHOCOLATE,
-    MINT
-};
 
 ///Can make an option to change size
 
@@ -58,6 +47,9 @@ class Dessert
     int randNum(int limit);
     double chooseFlavor();
     double updateSales(double & addSale);
+    //int getProductNum(const Dessert * new_data);
+    bool less_than_or_equal(const Dessert * to_comp);
+    bool greater_than(const Dessert * new_data);
     friend bool operator == (const Dessert & src,const Dessert &);
     friend bool operator == (const Dessert & src,const int & pNum);
     friend bool operator == (const int & pNum,const Dessert & src);
@@ -103,11 +95,11 @@ class MilkShake : public Dessert
         string chooseSize(); // changes to int to store in volume in data member
         //end of virtual functions
         string chooseContainer();// glass, foam
-        friend ostream & operator <<(ostream & out, const MilkShake &);
 
     private:
         int volume;
         string container;
+        vector<string> toppings;
 };
 
 class WaffleCone : public Dessert
