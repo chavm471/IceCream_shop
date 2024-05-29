@@ -18,8 +18,7 @@ int main()
         cout<<"Dessert Shop Menu!\n";
         cout<<"1. Put an order\n";
         cout<<"2. Display order\n";
-        cout<<"3. \n";
-        cout<<"4. Quit\n";
+        cout<<"3. Quit\n";
 
         cin >> shopChoice;
         cin.ignore(100,'\n');
@@ -122,7 +121,7 @@ int main()
         }
 
         //quit the menu
-        if(shopChoice == 4)
+        if(shopChoice == 3)
         {
             shopKeepgoing = false;
         }

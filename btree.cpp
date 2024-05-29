@@ -107,7 +107,9 @@ Btree::Btree(): root(nullptr)
 
 //destructor
 Btree::~Btree()
-{}
+{
+    removeAll();
+}
 
 //wrapper function for insert
 int Btree::insert(const Dessert * to_add)
