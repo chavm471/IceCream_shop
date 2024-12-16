@@ -114,12 +114,19 @@ Btree::~Btree()
 //wrapper function for insert
 int Btree::insert(const Dessert * to_add)
 {
+    //if b-tree is empty
+    if(!root){
+        //allocate a root node
+        //insert the Dessert
+
+    }
     return insert(root,move(to_add));
 }
 
 //recursive function for insert
 int Btree::insert(node_ptr & root,const Dessert * to_add)
 {
+    //base case
     if(!root)
     {
         //make new Node with array of unique ptrs size 4
@@ -128,6 +135,12 @@ int Btree::insert(node_ptr & root,const Dessert * to_add)
         //root->set_data(to_add,0);
         return 1;
     }
+
+    //if the node is not full
+        //insert the dessert in ascending order
+
+    //if the node is full
+        //split the node at the median
 
     if(root->greater_than(to_add))
     {

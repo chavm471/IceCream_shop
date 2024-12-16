@@ -45,7 +45,8 @@ int main()
                 {
                     Dessert * temp = new IceCreamCake();
 
-                    //ice cream class just has size and numLayer. num layers is based on size.
+                    //ice cream class just has size and numLayer.
+                    //num layers is based on size.
                     cout<<"What size cake do you want";
                     temp->chooseFlavor();
                     temp->chooseSize();
@@ -78,14 +79,15 @@ int main()
                     else
                     {
                         cerr<< "failed to downcast to Milkshake\n";
+                        exit(EXIT_FAILURE);
                     }
 
                     cout <<"The cake is this:"<< temp->displayProduct() <<endl;
                     myOrder.insert(temp);
 
                     //clean up memory 
-                    delete temp;
-                    delete milkshakePtr;
+                    //delete temp;
+                    //delete milkshakePtr;
                 }
 
                 //This inserts a Wafflecone object

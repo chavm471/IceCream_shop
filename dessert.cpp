@@ -55,9 +55,9 @@ int Dessert::randNum(int limit)
 double Dessert::chooseFlavor()
 {
     int choice =0;
-    int keepGoing {1};
     string temp = "";
     double charge {ADDFLAV};
+    bool flag = true;
     
     //this do while loop allows the user to pick flavors
     do{
@@ -86,9 +86,10 @@ double Dessert::chooseFlavor()
                 break;
             case 5:
                 cout <<"Back to the Dessert Menu!\n";
-                keepGoing = 99;
+                flag = false;
                 break;
             default:
+                flag = false;
                 break;
         }
         //push onto vector of icecream
@@ -104,9 +105,9 @@ double Dessert::chooseFlavor()
             cout << x << endl;
         }*/
         cout << endl;
-    }while(keepGoing == 1);
+    }while(flag);
 
-    return 1.0;
+    return charge;
 }
 
 //this function updates the sales for how many obejects is made.
