@@ -26,14 +26,15 @@ Dessert::~Dessert()
 int Dessert::displayProduct() const
 {
     //display data
-    cout<<"Product Number is:" << productNum <<endl;
-    cout<<"Total sale is:" << totalSales <<endl;
-    cout<<"Flavors:";
+    cout<<"\tProduct Number is: " << productNum <<endl;
+    cout<<"\tTotal sale is: " << totalSales <<endl;
+    cout<<"\tFlavors: ";
     //for loop to iterate through vector to print all flavors
     for(string x: iceCream)
     {
         cout << x << ", ";
     }
+    cout <<"\n";
 
     return 1;
 }
@@ -61,12 +62,12 @@ double Dessert::chooseFlavor()
     
     //this do while loop allows the user to pick flavors
     do{
-        cout <<"what flavor do you want?\n";
+        cout <<"what flavor do you want to add?\n";
         cout <<"1. STRAWBERRY\n";
         cout <<"2. VANILLA\n";
         cout <<"3. CHOCOLATE\n";
         cout <<"4. MINT\n";
-        cout <<"5. QUIT\n";
+        cout <<"5. QUIT FLAVOR MENU\n";
         cin>> choice;
         cin.ignore(100,'\n');
 
@@ -74,15 +75,31 @@ double Dessert::chooseFlavor()
         {
             case 1:
                 temp = "STRAWBERRY";
+                //push onto vector of icecream
+                iceCream.push_back(temp);
+                //charge the user for the flavor
+                updateSales(charge);
                 break;
             case 2:
                 temp = "VANILLA";
+                //push onto vector of icecream
+                iceCream.push_back(temp);
+                //charge the user for the flavor
+                updateSales(charge);
                 break;
             case 3: 
                 temp = "CHOCOLATE";
+                //push onto vector of icecream
+                iceCream.push_back(temp);
+                //charge the user for the flavor
+                updateSales(charge);
                 break;
             case 4:
                 temp = "MINT";
+                //push onto vector of icecream
+                iceCream.push_back(temp);
+                //charge the user for the flavor
+                updateSales(charge);
                 break;
             case 5:
                 cout <<"Back to the Dessert Menu!\n";
@@ -92,18 +109,6 @@ double Dessert::chooseFlavor()
                 flag = false;
                 break;
         }
-        //push onto vector of icecream
-        iceCream.push_back(temp);
-
-        //charge the user for the flavor
-        updateSales(charge);
-
-        //dont really need this printing flavors twice
-        /*cout<<"Your flavors are:\n";
-        for(string x: iceCream)
-        {
-            cout << x << endl;
-        }*/
         cout << endl;
     }while(flag);
 
@@ -166,6 +171,30 @@ bool operator == (const int & pNum,const Dessert & src)
     }
 }
 
+bool operator > (const Dessert & lhs,const Dessert & rhs){
+    return lhs.productNum < rhs.productNum; 
+}
+
+bool operator > (const Dessert & lhs,const int & pNum){
+    return lhs.productNum > pNum; 
+}
+
+bool operator > (const int & pNum,const Dessert & rhs){
+    return pNum > rhs.productNum;
+}
+
+bool operator < (const Dessert & lhs,const Dessert & rhs){
+    return lhs.productNum < rhs.productNum;
+}
+
+bool operator < (const Dessert & lhs,const int & pNum){
+    return lhs.productNum < pNum;
+}
+
+bool operator < (const int & pNum,const Dessert & rhs){
+    return pNum < rhs.productNum;
+}
+
 //constructor of IceCreamCake class
 IceCreamCake::IceCreamCake() : size("empty") , numLayers(0)
 {}
@@ -182,13 +211,19 @@ IceCreamCake::~IceCreamCake()
     size = "";
     numLayers =0;
 }
+        
+std::shared_ptr<Dessert> IceCreamCake::clone() const{
+    return make_shared<IceCreamCake>(*this);
+}
 
 //virtual functions
 int IceCreamCake::displayProduct() const
 {
+    cout<< "\tItem type: Ice cream Cake\n";
     Dessert::displayProduct();
-    cout <<"The size of the cake is:" << size << endl;
-    cout<<"The num of Layers is :" << numLayers << endl;
+    cout<< "\tThe size of the cake is: " << size << endl;
+    cout<< "\tThe num of Layers is : " << numLayers << endl;
+    cout<< "\n";
     return 1;
 }
 
@@ -211,6 +246,7 @@ string IceCreamCake::chooseSize() // large only
     {
         size = "MEDIUM";
         cakeSize = "MEDIUM";
+        numLayers = 2;
         //charge them for the size
         charge = MEDCAKE;
         updateSales(charge);
@@ -219,6 +255,7 @@ string IceCreamCake::chooseSize() // large only
     {
         size = "LARGE";
         cakeSize = "LARGE";
+        numLayers = 3;
         charge = LARGCAKE;
         updateSales(charge);
     }
@@ -291,21 +328,29 @@ MilkShake::~MilkShake()
     volume = 0;
     container = "";
 }
+        
+std::shared_ptr<Dessert> MilkShake::clone() const{
+    return make_shared<MilkShake>(*this);
+}
 
 //virtual functions
 int MilkShake::displayProduct() const
 {
     //call the base class displayproduct
+    cout<< "\tItem type: Milkshake\n";
     Dessert::displayProduct();
-    cout<< "The size of container is:"<< volume <<"oz\n";
-    cout<< "The container type is:" <<container << endl;
-
+    cout<< "\tThe size of container is: "<< volume <<"oz\n";
+    cout<< "\tThe container type is: " <<container << endl;
+    
+    cout<< "\tToppings: ";
     //iterate through the vector
     for(string y: toppings)
     {
         cout << y << ", ";
     }
-
+    cout<< "\n";
+    cout<< "\n";
+    
     return 1;
 }
 double MilkShake::addOns()
@@ -318,14 +363,14 @@ double MilkShake::addOns()
 
     //this do while loop allows the user to pick toppings
     do{
-        cout <<"what flavor do you want?\n";
+        cout <<"what topping do you want to add?\n";
         cout <<"1. CHERRIES\n";
         cout <<"2. NUTS\n";
         cout <<"3. COCONUT\n";
         cout <<"4. FUDGE\n";
         cout <<"5. CARAMEL\n";
         cout <<"6. OREO\n";
-        cout <<"7. QUIT\n"; 
+        cout <<"7. QUIT TOPPINGS MENU\n"; 
         cin>> choice;
         cin.ignore(100,'\n');
 
@@ -333,21 +378,43 @@ double MilkShake::addOns()
         {
             case 1:
                 temp = "CHERRIES";
+                //push onto vector of toppings
+                toppings.push_back(temp);
+                //charge the user for the flavor
+                updateSales(charge);
                 break;
             case 2:
                 temp = "NUTS";
+                //push onto vector of toppings
+                toppings.push_back(temp);
+                //charge the user for the flavor
+                updateSales(charge);
                 break;
             case 3: 
                 temp = "COCONUT";
+                //push onto vector of toppings
+                toppings.push_back(temp);
+                //charge the user for the flavor
+                updateSales(charge);
                 break;
             case 4:
                 temp = "FUDGE";
+                //push onto vector of toppings
+                toppings.push_back(temp);
+                //charge the user for the flavor
+                updateSales(charge);
                 break;
             case 5:
                 temp = "CARAMEL";
+                //push onto vector of toppings
+                toppings.push_back(temp);
+                //charge the user for the flavor
+                updateSales(charge);
                 break;
             case 6:
                 temp = "OREO";
+        //push onto vector of toppings
+        toppings.push_back(temp);
                 break;
             case 7:
                 cout <<"Back to the Dessert Menu!\n";
@@ -356,11 +423,7 @@ double MilkShake::addOns()
             default:
                 break;
         }
-        //push onto vector of toppings
-        toppings.push_back(temp);
 
-        //charge the user for the flavor
-        updateSales(charge);
     }while(keepGoing == 1);
     return 0.0;
 }
@@ -449,22 +512,28 @@ WaffleCone::WaffleCone(const Dessert & src,const string & src_coneSize, vector<s
 WaffleCone::~WaffleCone()
 {
     coneSize = "empty";
+}
 
+std::shared_ptr<Dessert> WaffleCone::clone() const{
+    return make_shared<WaffleCone>(*this);
 }
 
 //virtual function
 int WaffleCone::displayProduct() const
 {
+    cout<< "\tItem type: Waffle Cone\n";
     //call the base class diplay first
     Dessert::displayProduct();
-    cout<<"The cone size is: "<< coneSize <<endl;
-    cout<<"The toppings include: ";
+    cout<< "\tThe cone size is: "<< coneSize <<endl;
+    cout<< "\tThe toppings include: ";
 
     //iterate through the vector
     for(string y: toppings)
     {
         cout << y << ", ";
     }
+    cout<< "\n";
+    cout<< "\n";
     return 1;
 }
 
@@ -573,4 +642,3 @@ string WaffleCone::chooseCone()
 {
     return "string";
 }
-

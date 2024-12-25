@@ -14,22 +14,26 @@ class Node
         typedef shared_ptr<Node> node_ptr_type;
         Node(int num = 4);
         ~Node();
-        node_ptr_type & get_left();
-        node_ptr_type & get_mleft();
-        node_ptr_type & get_mright();
-        node_ptr_type & get_right();
-        bool less_than_or_equal(const Dessert * new_data);
-        bool greater_than(const Dessert * new_data);
-        int set_data(int index);
-        int displayData();
+
+        //functions to manage keys
+        bool is_full() const;//check if the node has 3 keys
+
+        shared_ptr<Dessert> get_key(int index) const;
+        void set_key(int index, shared_ptr<Dessert> value);
+
+        shared_ptr<Node> get_child(int index) const;
+        void set_child(int index,shared_ptr<Node> val);
+
+        int get_size() const;
+        void set_size(int s);
+
+        int add_key(shared_ptr<Dessert> new_data);
+        //int set_data(int index);
         
     private:
-        int size;
-        Dessert ** data;
-        node_ptr_type left;
-        node_ptr_type mleft;
-        node_ptr_type mright;
-        node_ptr_type right;
+        int size_n;//current number of keys
+        vector<shared_ptr<Dessert>> keys;//data
+        vector<node_ptr_type> children;//Fixed size of 4
 };
 
 //implementing a regular tree first then a balance tree
@@ -42,18 +46,19 @@ class Btree
         //destructor
         ~Btree();
         //wrapper function for insert
-        int insert(const Dessert * to_add);
+        int insert_dessert(Dessert *& to_add);
         //wrapper function for display
         int displayAll() const;
-        //wrapper fucntion for remove all function
-        int removeAll();
+        //wrapper fucntion for remove item function
+        int removeItem();
 
     private:
         node_ptr root;
         //this is the recursive calls
-        int insert(node_ptr & root,const Dessert * to_add);
+        int insert_dessert(node_ptr & root,Dessert *& to_add);
+        void split_node(node_ptr & to_split,node_ptr & parent,int child_index);
         //recursive call for the display all function
-        int displayAll(const node_ptr & root) const;
-        //recursive call for remove all
-        int deleteAll(node_ptr & current);
+        int displayAll(const node_ptr & current) const;
+        //recursive call for remove item
+        int removeItem(node_ptr & current);
 };

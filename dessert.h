@@ -41,9 +41,7 @@ class Dessert
     Dessert(const Dessert & to_copy);
     //destructor has to be virtual to call the correct derived class destructor
     virtual ~Dessert();
-    virtual int displayProduct() const;
-    virtual string chooseSize() = 0;
-    virtual double addOns() = 0;
+    virtual shared_ptr<Dessert> clone() const = 0;
     int randNum(int limit);
     double chooseFlavor();
     double updateSales(double & addSale);
@@ -53,6 +51,15 @@ class Dessert
     friend bool operator == (const Dessert & src,const Dessert &);
     friend bool operator == (const Dessert & src,const int & pNum);
     friend bool operator == (const int & pNum,const Dessert & src);
+    friend bool operator > (const Dessert & ,const Dessert &);
+    friend bool operator > (const Dessert & ,const int & pNum);
+    friend bool operator > (const int & pNum,const Dessert & src);
+    friend bool operator < (const Dessert & src,const Dessert &);
+    friend bool operator < (const Dessert & src,const int & pNum);
+    friend bool operator < (const int & pNum,const Dessert & src);
+    virtual int displayProduct() const;
+    virtual string chooseSize() = 0;
+    virtual double addOns() = 0;
 
     protected:
         Dessert();
@@ -76,6 +83,7 @@ class IceCreamCake : public Dessert
         double addOns();
         //end of virtual functions
         int pickLayers();
+        std::shared_ptr<Dessert> clone() const;  
 
     private:
         string size;
@@ -95,6 +103,7 @@ class MilkShake : public Dessert
         string chooseSize(); // changes to int to store in volume in data member
         //end of virtual functions
         string chooseContainer();// glass, foam
+        std::shared_ptr<Dessert> clone() const;  
 
     private:
         int volume;
@@ -114,6 +123,7 @@ class WaffleCone : public Dessert
         double addOns();
         //end of virtual functions
         string chooseCone();
+        std::shared_ptr<Dessert> clone() const;  
 
     private:
         string coneSize;

@@ -18,7 +18,8 @@ int main()
         cout<<"Dessert Shop Menu!\n";
         cout<<"1. Put an order\n";
         cout<<"2. Display order\n";
-        cout<<"3. Quit\n";
+        cout<<"3. Remove item from order\n";
+        cout<<"4. Quit\n";
 
         cin >> shopChoice;
         cin.ignore(100,'\n');
@@ -47,13 +48,14 @@ int main()
 
                     //ice cream class just has size and numLayer.
                     //num layers is based on size.
-                    cout<<"What size cake do you want";
                     temp->chooseFlavor();
                     temp->chooseSize();
                     temp->addOns();
-
-                    cout <<"The cake is this:"<< temp->displayProduct() <<endl;
-                    myOrder.insert(temp);
+                    
+                    //
+                    //cout <<"IceCream summary\n";
+                    //cout <<"The cake is this:\n"<< temp->displayProduct() <<endl;
+                    myOrder.insert_dessert(temp);
 
                     //clean up memory 
                     delete temp;
@@ -66,7 +68,7 @@ int main()
 
                     //Milk shake class just has volume and container. 
                     //num layers is based on size.
-                    cout<<"What size cake do you want";
+                    temp->chooseFlavor();
                     temp->chooseSize();
 
                     //use rtti to be able to access choose container here
@@ -81,13 +83,12 @@ int main()
                         cerr<< "failed to downcast to Milkshake\n";
                         exit(EXIT_FAILURE);
                     }
-
-                    cout <<"The cake is this:"<< temp->displayProduct() <<endl;
-                    myOrder.insert(temp);
-
-                    //clean up memory 
-                    //delete temp;
-                    //delete milkshakePtr;
+                    
+                    //
+                    milkshakePtr->addOns();
+                    
+                    //add to the btree
+                    myOrder.insert_dessert(temp);
                 }
 
                 //This inserts a Wafflecone object
@@ -96,18 +97,16 @@ int main()
                     Dessert * temp = new WaffleCone();
 
                     //WaffleCone class just has coneSize and toppings.
-                    cout<<"What size cake do you want";
                     temp->chooseFlavor();
                     temp->chooseSize();
 
-                    cout <<"The cake is this:"<< temp->displayProduct() <<endl;
-                    myOrder.insert(temp);
+                    myOrder.insert_dessert(temp);
 
                     //clean up memory 
                     delete temp;
                 }
 
-                //go back to 
+                //go back to the menu
                 if(option == 4)
                 {
                     keepGoing = false;
@@ -121,12 +120,17 @@ int main()
         {
             myOrder.displayAll();
         }
-
+        
+        //remove items from order
+        /*if(shopChoice == 3){
+            
+        }*/
         //quit the menu
-        if(shopChoice == 3)
+        if(shopChoice == 4)
         {
             shopKeepgoing = false;
         }
+
     }
     while(shopKeepgoing == true);
 }
