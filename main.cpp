@@ -1,6 +1,7 @@
 /* Marcos Chavez, CS302, Karla Fant in person, the purpose of this 
    file is to serve as the application of the program where the user
-   can use the program.
+   can use the program. User will be able to order from the 
+   ice cream shop here.
  */
 
 #include "btree.h"
@@ -18,8 +19,8 @@ int main()
         cout<<"Dessert Shop Menu!\n";
         cout<<"1. Put an order\n";
         cout<<"2. Display order\n";
-        cout<<"3. Remove item from order\n";
-        cout<<"4. Quit\n";
+        //cout<<"3. Remove item from order\n";
+        cout<<"3. Quit\n";
 
         cin >> shopChoice;
         cin.ignore(100,'\n');
@@ -123,10 +124,20 @@ int main()
         
         //remove items from order
         /*if(shopChoice == 3){
-            
+            int to_remove = 0;
+
+            cout <<"Enter the product number of the item you\n"<<
+                "want to delete.\n";
+            cout <<">";
+
+            cin >> to_remove;
+            cin.ignore(100,'\n');
+
+            myOrder.removeItem(to_remove);     
         }*/
+
         //quit the menu
-        if(shopChoice == 4)
+        if(shopChoice == 3)
         {
             shopKeepgoing = false;
         }

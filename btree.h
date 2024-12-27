@@ -28,6 +28,7 @@ class Node
         void set_size(int s);
 
         int add_key(shared_ptr<Dessert> new_data);
+        //void remove_key(int index);
         //int set_data(int index);
         
     private:
@@ -49,8 +50,8 @@ class Btree
         int insert_dessert(Dessert *& to_add);
         //wrapper function for display
         int displayAll() const;
-        //wrapper fucntion for remove item function
-        int removeItem();
+        int removeAll();
+        //int removeItem(int to_remove);
 
     private:
         node_ptr root;
@@ -59,6 +60,6 @@ class Btree
         void split_node(node_ptr & to_split,node_ptr & parent,int child_index);
         //recursive call for the display all function
         int displayAll(const node_ptr & current) const;
-        //recursive call for remove item
-        int removeItem(node_ptr & current);
+        int removeAll(node_ptr & current);
+        //int removeItem(node_ptr & current,int to_remove);
 };

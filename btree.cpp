@@ -48,6 +48,17 @@ int Node::add_key(shared_ptr<Dessert> new_data)
     return 0;
 }
 
+/*void Node::remove_key(int index)
+{
+    if(index < 0 || index >= static_cast<int>(keys.size()))
+    {
+        //escape from function nothing to do.
+        return;
+    }
+    keys.erase(keys.begin() + index);
+    size_n--;
+}*/
+
 shared_ptr<Dessert> Node::get_key(int index) const{
     //return the the key value
     return keys[index];
@@ -57,6 +68,7 @@ void Node::set_key(int index, shared_ptr<Dessert> value){
     keys[index] = value;
 }
 
+//gets child and returns the child type shared_ptr (NODE)
 shared_ptr<Node> Node::get_child(int index) const{
     //returnd the child of current node
     return children[index];
@@ -232,23 +244,59 @@ int Btree::displayAll(const node_ptr & current) const
 }
 
 //wrapper fucntion for remove all function
-int Btree::removeItem()
-{
-    if(root)
-    {
-        return -1;
-    }
-    
-
-
-    return 0;
-}
-
-//recursive call for remove all
-int Btree::removeItem(node_ptr & current)
+/*int Btree::removeItem(int to_remove)
 {
     if(!root)
     {
         return -1;
     }
+
+    return removeItem(root,to_remove);
+}
+
+//recursive call for remove all
+int Btree::removeItem(node_ptr & current,int to_remove)
+{
+    if(!current)
+    {
+        return -1;
+    }
+
+    int numKeys = current->get_size();
+
+    for(int i = 0; i < numKeys; ++i)
+    {
+        //fetch the shared_ptr<Dessert> at index i
+        auto treat = current->get_key(i);
+
+        if(treat && (*treat == to_remove))
+        {
+            current->remove_key(i);
+        }
+    }
+
+    //if its a leaf node, its simply not found
+    if(!current->get_child(0))
+    {
+        return -1;
+    }
+
+    //otherwise, we figure out which child to search
+    int j = 0;
+    while(j < numKeys && *current->get_key(j) < to_remove)
+    {
+        ++j;
+    }
+    auto child = current->get_child(j);
+
+    //recursively call removeItem on that child
+    return removeItem(child,to_remove);
+}*/
+
+int Btree::removeAll(){
+    return 0;
+}
+
+int Btree::removeAll(node_ptr & current){
+    return 0;
 }
